@@ -1,0 +1,9 @@
+Cara run program
+
+buka terminal cukup di root
+
+kemudian jalankan:
+./soal08/build.sh
+
+lalu jalankan
+./soal08/requiem
