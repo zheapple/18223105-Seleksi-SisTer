@@ -5,8 +5,8 @@ Repository ini berisi solusi lengkap untuk soal-soal seleksi Laboratorium Sister
 ## 👨‍🎓 Profil Kandidat
 
 **NIM:** 18223105  
-**Nama:** [Nama Lengkap]  
-**Program Studi:** Teknik Informatika  
+**Nama:** Zheannetta Apple 
+**Program Studi:** Sistem dan Teknologi Informasi
 **Institusi:** Institut Teknologi Bandung  
 **Email:** 18223105@std.stei.itb.ac.id
 
