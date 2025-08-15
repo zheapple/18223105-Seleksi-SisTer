@@ -1,118 +1,82 @@
-# Requiem - BigInteger Multiplication
+# Soal 08: Requiem - Perkalian Bilangan Besar
 
-> **Soal08**: Low-level implementation of arbitrary-precision integer multiplication using bitwise operations and goto-based control flow.
+Implementasi perkalian bilangan bulat presisi-arbitrer menggunakan operasi bitwise dan kontrol alur berbasis `goto` untuk pembelajaran teknik pemrograman tingkat rendah.
 
-[![Language](https://img.shields.io/badge/language-C17-blue.svg)](https://en.wikipedia.org/wiki/C17_(C_standard_revision))
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-macOS-lightgrey.svg)](https://www.apple.com/macos/)
+## 📋 Deskripsi Implementasi
 
-## 📖 Overview
+**Requiem** adalah implementasi khusus perkalian bilangan besar yang mendemonstrasikan:
 
-**Requiem** is a specialized implementation of big integer multiplication that demonstrates:
+- ✨ **Aritmatika Bitwise**: Semua operasi matematika diimplementasikan menggunakan operasi bitwise saja
+- 🔄 **Kontrol Alur Goto**: Tidak menggunakan loop tradisional - semua kontrol alur menggunakan statement `goto`
+- 🚀 **Optimasi Lookup Table**: Tabel prekomputasi untuk perkalian digit dan pemisahan yang cepat
+- 🔢 **Manajemen Memori Manual**: Array ukuran tetap dengan representasi digit LSB-first
 
-- ✨ **Bitwise Arithmetic**: All mathematical operations implemented using bitwise operations only
-- 🔄 **Goto-based Control Flow**: No traditional loops - all control flow via `goto` statements
-- 🚀 **Lookup Table Optimization**: Precomputed tables for fast digit multiplication and splitting
-- 🔢 **Manual Memory Management**: Fixed-size arrays with LSB-first digit representation
+Project ini menampilkan teknik pemrograman non-konvensional sambil mempertahankan performa optimal untuk tujuan edukasi.
 
-This project showcases unconventional programming techniques while maintaining optimal performance for educational purposes.
+## 🏗️ Arsitektur dan Kompleksitas
 
-## 🏗️ Architecture
+### Kompleksitas Algoritma
+- **Kompleksitas Waktu**: `O(N²)` dimana N adalah jumlah digit
+- **Kompleksitas Ruang**: `O(N)` dengan kapasitas maksimum 1000 digit
+- **Optimasi**: Tabel lookup prekomputasi untuk perkalian dan pemisahan digit
 
-### Algorithm Complexity
-- **Time Complexity**: `O(N²)` where N is the number of digits
-- **Space Complexity**: `O(N)` with maximum capacity of 1000 digits
-- **Optimization**: Precomputed multiplication and digit-split lookup tables
+### Komponen Utama
 
-### Key Components
+| Komponen | Deskripsi |
+|----------|-----------|
+| `u8_add()` | Penjumlahan bitwise menggunakan propagasi carry |
+| `u8_sub()` | Pengurangan bitwise menggunakan propagasi borrow |
+| `mul10[][]` | Tabel perkalian 10×10 yang sudah diprekomputasi |
+| `split_lo[]` | Ekstraksi digit rendah (0-99 → 0-9) |
+| `split_hi[]` | Ekstraksi digit tinggi (0-99 → 0-9) |
 
-| Component | Description |
-|-----------|-------------|
-| `u8_add()` | Bitwise addition using carry propagation |
-| `u8_sub()` | Bitwise subtraction using borrow propagation |
-| `mul10[][]` | 10×10 precomputed multiplication table |
-| `split_lo[]` | Lower digit extraction (0-99 → 0-9) |
-| `split_hi[]` | Higher digit extraction (0-99 → 0-9) |
-
-## 📁 Project Structure
-
-```
-soal08/
-├── requiem.c       # Source implementation (170 lines)
-├── requiem         # Compiled binary executable
-├── build.sh        # Build automation script
-└── README.md       # This documentation
-```
-
-## 🚀 Quick Start
+## 🛠️ Cara Kompilasi dan Menjalankan
 
 ### Prerequisites
-- **Compiler**: Clang (recommended) or GCC with C17 support
-- **Platform**: macOS, Linux, or Unix-like systems
-- **Memory**: Minimal requirements (< 1MB)
+- **Compiler**: Clang (disarankan) atau GCC dengan dukungan C17
+- **Platform**: macOS, Linux, atau sistem Unix-like
 
-### Installation
-
-1. **Clone and navigate to the project**:
-   ```bash
-   cd /path/to/18223105-Seleksi-SisTer/soal08
-   ```
-
-2. **Build using the provided script from repo root**:
-   ```bash
-   cd ..  # Go to repo root
-   chmod +x soal08/build.sh
-   ./soal08/build.sh
-   cd soal08  # Return to soal08 directory
-   ```
-
-3. **Or build manually**:
-   ```bash
-   clang -std=c17 -O2 requiem.c -o requiem
-   ```
-
-### Basic Usage
+### Kompilasi
 
 ```bash
-# Run the program
+# Build menggunakan script yang disediakan
+chmod +x build.sh
+./build.sh
+
+# Atau build manual
+clang -std=c17 -O2 requiem.c -o requiem
+```
+
+### Menjalankan
+
+```bash
+# Menjalankan program
 ./requiem
 ```
 
-**Example session:**
+**Contoh sesi penggunaan:**
 ```
 Masukkan angka pertama: 123
 Masukkan angka kedua: 456
 56088
 ```
 
-**Automated input via pipe:**
-```bash
-echo -e "123\n456" | ./requiem
-```
-Output (prompts appear but input values don't echo):
-```
-Masukkan angka pertama: Masukkan angka kedua: 56088
-```
-
-## 🧪 Testing
+## 🧪 Pengujian dan Validasi
 
 ### Test Cases
 
-| Input A | Input B | Expected Output | Test Type |
-|---------|---------|-----------------|-----------|
-| `12` | `34` | `408` | Basic |
-| `123` | `456` | `56088` | Medium |
-| `999` | `999` | `998001` | Large |
+| Input A | Input B | Output yang Diharapkan | Tipe Test |
+|---------|---------|----------------------|-----------|
+| `12` | `34` | `408` | Dasar |
+| `123` | `456` | `56088` | Menengah |
+| `999` | `999` | `998001` | Besar |
 | `0` | `123` | `0` | Edge Case |
-| `9` | `9` | `81` | Single Digit |
 
-**Note**: When using pipe input, prompts appear but input values don't echo to terminal.
-
-### Automated Testing
+### Testing Otomatis
 
 ```bash
-# Create and run test suite
-cat > run_tests.sh << 'EOF'
+# Membuat dan menjalankan test suite
+cat > run_tests.sh << 'TESTEOF'
 #!/bin/bash
 echo "🧪 Testing Requiem..."
 
@@ -129,161 +93,70 @@ test_case "12\n34" "408"
 test_case "123\n456" "56088"  
 test_case "999\n999" "998001"
 test_case "0\n123" "0"
-EOF
+TESTEOF
 
 chmod +x run_tests.sh && ./run_tests.sh
 ```
 
-### Performance Benchmarking
+## 📊 Spesifikasi Teknis
 
+### Karakteristik Performa
+- **Algoritma**: Perkalian grade-school dengan optimasi
+- **Kompleksitas Waktu**: O(N²) dimana N = jumlah digit
+- **Kompleksitas Ruang**: O(N) dengan batas MAXD = 1000 digit
+- **Penggunaan Memori**: ~8KB untuk array + minimal stack
+
+### Teknik Optimasi
+1. **Tabel Perkalian Prekomputasi**: `mul10[10][10]` menghilangkan perkalian runtime
+2. **Tabel Split Digit**: `split_lo[100]`, `split_hi[100]` untuk handling carry yang cepat
+3. **Representasi LSB-first**: Arah propagasi carry yang natural
+4. **Kontrol Berbasis Goto**: Menghilangkan overhead loop
+
+## 🎓 Nilai Edukasi
+
+Implementasi ini mendemonstrasikan beberapa konsep pemrograman tingkat lanjut:
+
+### Teknik Pemrograman Tingkat Rendah
+- **Manajemen Memori Manual**: Array ukuran tetap tanpa alokasi dinamis
+- **Operasi Bitwise**: Aritmatika diimplementasikan hanya menggunakan operasi logis
+- **Kontrol Alur Non-konvensional**: Pemrograman terstruktur via statement `goto`
+- **Optimasi Performa**: Lookup table dan perbaikan algoritma
+
+### Konsep Computer Science
+- **Aritmatika Bilangan Besar**: Menangani bilangan di luar batas tipe native
+- **Analisis Algoritma**: Memahami trade-off kompleksitas waktu/ruang
+- **Optimasi Kode**: Menyeimbangkan readability vs. performa
+- **System Programming**: Pemrograman C tingkat rendah tanpa dependency library standar
+
+## 🐛 Troubleshooting
+
+### Masalah Kompilasi
+**Error: `clang: command not found`**
 ```bash
-# Measure execution time
-time echo -e "123456789\n987654321" | ./requiem
+# Install Xcode Command Line Tools (macOS)
+xcode-select --install
 
-# Memory usage analysis  
-/usr/bin/time -l echo -e "999999999\n999999999" | ./requiem
+# Install GCC (Linux)
+sudo apt install gcc  # Ubuntu
 ```
 
-## 🔧 Development
+### Masalah Runtime
+**Program crash dengan input besar**
+- Periksa batas MAXD = 1000 digit
+- Input yang terlalu panjang akan menyebabkan overflow
 
-### Build Options
+## 📈 Tips Optimasi
 
-```bash
-# Debug build with symbols
-clang -std=c17 -g -O0 requiem.c -o requiem_debug
+1. **Compiler optimization**: Gunakan `-O2` atau `-O3` untuk performa optimal
+2. **Input validation**: Tambahkan validasi input untuk robustness
+3. **Memory alignment**: Pertimbangkan alignment untuk performa cache yang lebih baik
 
-# Optimized production build
-clang -std=c17 -O3 -march=native requiem.c -o requiem_fast
-
-# With sanitizers for debugging
-clang -std=c17 -fsanitize=address -fsanitize=undefined requiem.c -o requiem_safe
-```
-
-### Code Analysis
-
-```bash
-# Generate assembly output
-clang -S -std=c17 -O2 requiem.c -o requiem.s
-
-# Analyze binary
-objdump -d requiem | head -50
-
-# Code statistics
-echo "Lines of code: $(wc -l < requiem.c)"
-echo "Goto statements: $(grep -c goto requiem.c)"
-echo "Bitwise operations: $(grep -c 'u8_add\|u8_sub' requiem.c)"
-```
-
-### Debugging
-
-```bash
-# Interactive debugging with LLDB
-lldb ./requiem_debug
-# (lldb) run
-# (lldb) breakpoint set -f requiem.c -l 100
-# (lldb) continue
-```
-
-## � Technical Specifications
-
-### Performance Characteristics
-- **Algorithm**: Grade-school multiplication with optimizations
-- **Time Complexity**: O(N²) where N = number of digits
-- **Space Complexity**: O(N) with MAXD = 1000 digit limit
-- **Memory Usage**: ~8KB for arrays + minimal stack
-
-### Implementation Details
-
-#### Bitwise Arithmetic Functions
-```c
-unsigned char u8_add(unsigned char a, unsigned char b);  // Addition via XOR + carry
-unsigned char u8_sub(unsigned char a, unsigned char b);  // Subtraction via XOR + borrow  
-unsigned char inc(unsigned char x);                      // Increment wrapper
-unsigned char dec(unsigned char x);                      // Decrement wrapper
-```
-
-#### Optimization Techniques
-1. **Precomputed Multiplication Table**: `mul10[10][10]` eliminates runtime multiplication
-2. **Digit Split Tables**: `split_lo[100]`, `split_hi[100]` for fast carry handling
-3. **LSB-first Representation**: Natural carry propagation direction
-4. **Goto-based Control**: Eliminates loop overhead
-
-### Platform Compatibility
-
-| Platform | Compiler | Status |
-|----------|----------|--------|
-| macOS ARM64 | Clang 15+ | ✅ Tested |
-| macOS x86_64 | Clang 15+ | ✅ Tested |
-| Linux x86_64 | GCC 9+ | ✅ Compatible |
-| Linux ARM64 | GCC 9+ | ✅ Compatible |
-
-## 🎓 Educational Value
-
-This implementation demonstrates several advanced programming concepts:
-
-### Low-Level Programming Techniques
-- **Manual Memory Management**: Fixed-size arrays without dynamic allocation
-- **Bitwise Operations**: Arithmetic implemented using logical operations only
-- **Unconventional Control Flow**: Structured programming via `goto` statements
-- **Performance Optimization**: Lookup tables and algorithmic improvements
-
-### Computer Science Concepts
-- **Big Integer Arithmetic**: Handling numbers beyond native type limits
-- **Algorithm Analysis**: Understanding time/space complexity trade-offs
-- **Code Optimization**: Balancing readability vs. performance
-- **System Programming**: Low-level C programming without standard library dependencies
-
-## 🔍 Code Examples
-
-### Input Processing
-```c
-// Read input strings with prompts
-printf("Masukkan angka pertama: ");
-scanf("%s", sa);
-printf("Masukkan angka kedua: ");
-scanf("%s", sb);
-
-// Convert string to LSB-first digit array
-j = 0;
-i = dec(la);  // Start from last character
-FILL_A:
-    A[j] = sa[i] & 0x0F;  // Extract digit
-    if (i == 0) goto END_FILL_A;
-    i = dec(i);
-    j = inc(j);
-    goto FILL_A;
-```
-
-### Multiplication Core
-```c
-// O(N²) multiplication with lookup optimization
-prod = mul10[A[i]][B[j]];        // Precomputed product
-t = u8_add(R[i+j], prod);        // Add to result
-t = u8_add(t, carry);            // Include carry
-d = split_lo[t];                 // Extract low digit
-c = split_hi[t];                 // Extract carry
-```
-
-## 🤝 Contributing
-
-This is an educational project for learning purposes. Key areas for exploration:
-
-1. **Algorithm Variants**: Implement Karatsuba or FFT-based multiplication
-2. **Platform Porting**: Test on different architectures
-3. **Performance Analysis**: Detailed benchmarking and profiling
-4. **Code Visualization**: Generate control flow graphs from goto statements
-
-## 📜 License
-
-This project is part of the **18223105-Seleksi-SisTer** academic assignment.
-
-## 📞 Support
-
-- **Student ID**: 18223105
-- **Repository**: [18223105-Seleksi-SisTer](https://github.com/zheapple/18223105-Seleksi-SisTer)
-- **Assignment**: Soal08 - Requiem
+---
+**Author:** 18223105  
+**Course:** Sister (Sistem Terdistribusi)  
+**Institution:** Institut Teknologi Bandung
 
 ---
 
-> *"In memory of conventional loops - here lies `for`, `while`, and `do-while`. Long live `goto`."*  
-> — The Requiem Philosophy
+> *"Dalam kenangan loop konvensional - di sinilah terbaring `for`, `while`, dan `do-while`. Hiduplah `goto`."*  
+> — Filosofi Requiem
