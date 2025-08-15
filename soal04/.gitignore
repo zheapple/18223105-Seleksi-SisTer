@@ -1,0 +1,29 @@
+# Compiled executables
+bin/
+mandelbrot_*
+!mandelbrot_*.cpp
+!mandelbrot_*.hpp
+
+# Generated images
+*.bmp
+output/
+regions/
+
+# Build artifacts
+*.o
+*.obj
+*.exe
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# Temporary files
+*~
+*.tmp
+*.temp
