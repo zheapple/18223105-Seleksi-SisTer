@@ -58,10 +58,12 @@ soal08/
    cd /path/to/18223105-Seleksi-SisTer/soal08
    ```
 
-2. **Build using the provided script**:
+2. **Build using the provided script from repo root**:
    ```bash
-   chmod +x build.sh
-   ./build.sh
+   cd ..  # Go to repo root
+   chmod +x soal08/build.sh
+   ./soal08/build.sh
+   cd soal08  # Return to soal08 directory
    ```
 
 3. **Or build manually**:
@@ -72,19 +74,24 @@ soal08/
 ### Basic Usage
 
 ```bash
-# Interactive mode
+# Run the program
 ./requiem
-
-# Example session:
-# Masukkan angka pertama: 123
-# Masukkan angka kedua: 456
-# Output: 56088
 ```
 
+**Example session:**
+```
+Masukkan angka pertama: 123
+Masukkan angka kedua: 456
+56088
+```
+
+**Automated input via pipe:**
 ```bash
-# Automated input via pipe
-echo -e "999\n999" | ./requiem
-# Output: 998001
+echo -e "123\n456" | ./requiem
+```
+Output (prompts appear but input values don't echo):
+```
+Masukkan angka pertama: Masukkan angka kedua: 56088
 ```
 
 ## 🧪 Testing
@@ -99,6 +106,8 @@ echo -e "999\n999" | ./requiem
 | `0` | `123` | `0` | Edge Case |
 | `9` | `9` | `81` | Single Digit |
 
+**Note**: When using pipe input, prompts appear but input values don't echo to terminal.
+
 ### Automated Testing
 
 ```bash
@@ -108,7 +117,7 @@ cat > run_tests.sh << 'EOF'
 echo "🧪 Testing Requiem..."
 
 test_case() {
-    local result=$(echo -e "$1" | ./requiem)
+    local result=$(echo -e "$1" | ./requiem | tail -1)
     if [ "$result" = "$2" ]; then
         echo "✅ PASS: $1 → $result"
     else
@@ -228,6 +237,12 @@ This implementation demonstrates several advanced programming concepts:
 
 ### Input Processing
 ```c
+// Read input strings with prompts
+printf("Masukkan angka pertama: ");
+scanf("%s", sa);
+printf("Masukkan angka kedua: ");
+scanf("%s", sb);
+
 // Convert string to LSB-first digit array
 j = 0;
 i = dec(la);  // Start from last character
