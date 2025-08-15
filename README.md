@@ -225,7 +225,7 @@ chmod +x build.sh && ./build.sh
 
 **Email:** 18223105@std.stei.itb.ac.id  
 **GitHub:** [@zheapple](https://github.com/zheapple)  
-**LinkedIn:** [LinkedIn Profile]  
+**LinkedIn:** [zheannettaapple](linkedin.com/in/zheannettaapple)
 **Medium:** [@18223105](https://medium.com/@18223105)
 
 ## 📄 License
